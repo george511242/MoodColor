@@ -100,4 +100,12 @@ export default {
   background-color: #f0f0f0;
   border-radius: 4px;
 }
+button {
+  background-color: #bfecff;
+  border: 1px solid black;
+  padding: 2px;
+  border-radius: 2px;
+  height: 34px;
+  width: 70px;
+}
 </style>

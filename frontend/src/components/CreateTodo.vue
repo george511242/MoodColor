@@ -99,6 +99,7 @@ fieldset {
   padding: 2px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .input-task {
   width: 50%;
@@ -107,5 +108,6 @@ fieldset {
 }
 .button-1 {
   width: 70px;
+  height: 34px;
 }
 </style>
