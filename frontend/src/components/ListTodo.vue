@@ -98,7 +98,7 @@ export default {
   padding: 10px;
   justify-content: space-between;
   background-color: #f0f0f0;
-  border-radius: 4px;
+  border-radius: 5px;
 }
 button {
   background-color: #bfecff;
