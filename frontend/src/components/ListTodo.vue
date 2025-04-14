@@ -104,7 +104,7 @@ button {
   background-color: #bfecff;
   border: 1px solid black;
   padding: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
   height: 34px;
   width: 70px;
 }
