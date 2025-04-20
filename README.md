@@ -1,4 +1,4 @@
-# Wabapp_project
+# 🎨 MoodColor
 ![MoodColor Cover](./Picture/Cover.png)
 🎨 MoodColor is an AI-powered mood tracking tool that transforms your daily experiences—whether in text or photos—into a color that represents your current emotional state. Whether you're capturing joy, peace, or subtle melancholy, the system analyzes your input and assigns a HEX color code to visually express how you feel.
 
