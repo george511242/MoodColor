@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
+from schemas.user import UserCreate, UserResponse
 
 router = APIRouter()
 
@@ -15,12 +16,6 @@ def get_user_by_id(user_id: int):
         raise HTTPException(status_code=404, detail="User not found")
     
     return response.data[0]
-
-class UserCreate(BaseModel):
-    username: str
-    email: str
-    password_hash: str
-    created_at: Optional[datetime] = None
 
 def add_user(user_data: dict):
     response = supabase.table("USER").insert(user_data).execute()
