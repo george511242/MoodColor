@@ -1,4 +1,5 @@
 <template>
+  <v-toolbar :elevation="8" title="Toolbar"></v-toolbar>
   <div class="container">
     <div class="row vertical-centre justify-content-center mt-50">
       <CreateTodo></CreateTodo>
