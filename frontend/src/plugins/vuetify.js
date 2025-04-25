@@ -1,10 +1,17 @@
 // Styles
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
+import "@mdi/font/css/materialdesignicons.css";
+import "vuetify/styles";
 
-// Vuetify
-import { createVuetify } from 'vuetify'
+import { createVuetify } from "vuetify";
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+export default createVuetify({
+  theme: {
+    themes: {
+      light: {
+        colors: {
+          "data-table-header": "#808080", // 設定 v-data-table header 為灰色
+        },
+      },
+    },
+  },
+});

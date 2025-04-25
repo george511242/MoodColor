@@ -20,7 +20,7 @@
       <v-list>
         <v-list-item
           button
-          @click="handleClick('Item 1')"
+          @click="goToTodo('/today')"
           class="d-flex align-center"
         >
           <v-icon class="mr-2">mdi-folder-open</v-icon>
@@ -28,7 +28,7 @@
         </v-list-item>
         <v-list-item
           button
-          @click="handleClick('Item 2')"
+          @click="goToTodo('/attendenceLog')"
           class="d-flex align-center"
         >
           <v-icon class="mr-2">mdi-calendar-check</v-icon>
@@ -36,7 +36,7 @@
         </v-list-item>
         <v-list-item
           button
-          @click="handleClick('Item 1')"
+          @click="goToTodo('/myTeam')"
           class="d-flex align-center"
         >
           <v-icon class="mr-2">mdi-account-group</v-icon>
@@ -57,6 +57,7 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   name: "TodayAttendance", // 拼字修正
@@ -64,8 +65,15 @@ export default {
   setup() {
     const drawer = ref(false);
 
+    const router = useRouter();
+
+    function goToTodo(page) {
+      router.push(page);
+    }
+
     return {
       drawer,
+      goToTodo,
     };
   },
 };

@@ -2,24 +2,106 @@
   <v-app>
     <SideBar>
       <v-container>
-        <!-- 放你主頁的內容 -->
-        <h1>歡迎！這裡是今天出勤頁面</h1>
+        <v-card title="Today Record" flat>
+          <v-table>
+            <thead>
+              <tr>
+                <th
+                  v-for="header in headers"
+                  :key="header.value"
+                  class="text-left"
+                  style="background-color: #f5f5f5"
+                >
+                  {{ header.text }}
+                </th>
+              </tr>
+
+              <tr></tr>
+            </thead>
+
+            <tbody>
+              <tr v-for="item in records" :key="item.name">
+                <td>{{ item.date }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.checkInTime }}</td>
+                <td>{{ item.checkOutTime }}</td>
+                <td>{{ item.checkInGate }}</td>
+                <td>{{ item.checkOutGate }}</td>
+                <td>{{ item.status }}</td>
+              </tr>
+            </tbody>
+          </v-table>
+        </v-card>
+        <v-spacer></v-spacer>
+        <v-card title="Records" flat>
+          <template v-slot:text>
+            <v-text-field
+              v-model="search"
+              label="Search"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              single-line
+            ></v-text-field>
+          </template>
+
+          <!-- 使用 DataTable 組件，並傳遞資料 -->
+          <DataTable
+            :show-headers="headers"
+            :items="records"
+            :search="search"
+          />
+        </v-card>
       </v-container>
     </SideBar>
   </v-app>
 </template>
 
 <script>
+import { ref } from "vue";
 import SideBar from "../components/SideBar.vue";
+import DataTable from "../components/DataTable.vue";
 
 export default {
-  name: "TodayAttendance", // 拼字修正
-  components: { SideBar }, // ✅ 正確的結尾
-  setup() {},
+  name: "TodayAttendance",
+  components: { SideBar, DataTable },
+  setup() {
+    const search = ref("");
+    const headers = [
+      { text: "Date", value: "date" },
+      { text: "Name", value: "name" },
+      { text: "Check-In Time", value: "checkInTime" },
+      { text: "Check-Out Time", value: "checkOutTime" },
+      { text: "Check-In Gate", value: "checkInGate" },
+      { text: "Check-Out Gate", value: "checkOutGate" },
+      { text: "Status", value: "status" },
+    ];
+
+    const records = [
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "09:00",
+        checkOutTime: "17:00",
+        checkInGate: "Gate A",
+        checkOutGate: "Gate B",
+        status: "Present",
+      },
+    ];
+
+    return {
+      search,
+      headers,
+      records,
+    };
+  },
 };
 </script>
 
 <style scoped>
+text {
+  color: black;
+}
 h2 {
   margin: 10px auto;
   font-size: 30px;
