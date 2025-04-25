@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import UserLogin from "../views/UserLogin.vue"; // 確保這裡是引入 UserLogin
-import Todo from "../views/Todo.vue";
+import TodayAttendence from "../views/Today.vue";
 // import HomeView from "../views/HomeView.vue";
 
 const routes = [
   { path: "/", name: "UserLogin", component: UserLogin }, // 使用 UserLogin 組件
-  { path: "/todo", name: "TodoView", component: Todo },
+  { path: "/today", name: "TodayAttendence", component: TodayAttendence },
 ];
 
 const router = createRouter({
