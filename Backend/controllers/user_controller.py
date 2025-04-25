@@ -24,3 +24,4 @@ def add_user(user_data: dict):
         raise HTTPException(status_code=400, detail="Failed to add user")
     
     return response.data[0]
+
