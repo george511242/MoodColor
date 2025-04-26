@@ -4,13 +4,22 @@
     :headers="headers"
     :items="items"
     :search="search"
-    class="elevation-1"
-  ></v-data-table>
+    class="elevation-1 text-center"
+  >
+    <template #[`item.status`]="{ item }">
+      <StatusCard :content="item.status" />
+    </template>
+  </v-data-table>
 </template>
 
 <script>
+import StatusCard from "./StatusCard.vue";
+
 export default {
   name: "DataTable",
+  components: {
+    StatusCard,
+  },
   props: {
     headers: {
       type: Array,

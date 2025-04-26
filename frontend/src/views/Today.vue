@@ -9,7 +9,7 @@
                 <th
                   v-for="header in headers"
                   :key="header.value"
-                  class="text-left"
+                  class="text-center"
                   style="background-color: #f5f5f5"
                 >
                   {{ header.text }}
@@ -20,20 +20,22 @@
             </thead>
 
             <tbody>
-              <tr v-for="item in records" :key="item.name">
+              <tr v-for="item in records" :key="item.name" class="text-center">
                 <td>{{ item.date }}</td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.checkInTime }}</td>
                 <td>{{ item.checkOutTime }}</td>
                 <td>{{ item.checkInGate }}</td>
                 <td>{{ item.checkOutGate }}</td>
-                <td>{{ item.status }}</td>
+                <td>
+                  <StatusCard :content="item.status" />
+                </td>
               </tr>
             </tbody>
           </v-table>
         </v-card>
         <v-spacer></v-spacer>
-        <v-card title="Records" flat>
+        <v-card title="History Records" flat>
           <template v-slot:text>
             <v-text-field
               v-model="search"
@@ -48,7 +50,7 @@
           <!-- 使用 DataTable 組件，並傳遞資料 -->
           <DataTable
             :show-headers="headers"
-            :items="records"
+            :items="historyRecords"
             :search="search"
           />
         </v-card>
@@ -61,10 +63,11 @@
 import { ref } from "vue";
 import SideBar from "../components/SideBar.vue";
 import DataTable from "../components/DataTable.vue";
+import StatusCard from "../components/StatusCard.vue";
 
 export default {
   name: "TodayAttendance",
-  components: { SideBar, DataTable },
+  components: { SideBar, DataTable, StatusCard },
   setup() {
     const search = ref("");
     const headers = [
@@ -85,7 +88,55 @@ export default {
         checkOutTime: "17:00",
         checkInGate: "Gate A",
         checkOutGate: "Gate B",
-        status: "Present",
+        status: "Late",
+      },
+    ];
+
+    const historyRecords = [
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "09:00",
+        checkOutTime: "17:00",
+        checkInGate: "Gate A",
+        checkOutGate: "Gate B",
+        status: "Late",
+      },
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "08:45",
+        checkOutTime: "17:05",
+        checkInGate: "Gate B",
+        checkOutGate: "Gate C",
+        status: "On-time",
+      },
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "09:20",
+        checkOutTime: "16:55",
+        checkInGate: "Gate A",
+        checkOutGate: "Gate A",
+        status: "Late",
+      },
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "08:30",
+        checkOutTime: "17:15",
+        checkInGate: "Gate C",
+        checkOutGate: "Gate B",
+        status: "On-time",
+      },
+      {
+        date: "2025-04-25",
+        name: "John Doe",
+        checkInTime: "09:10",
+        checkOutTime: "16:40",
+        checkInGate: "Gate B",
+        checkOutGate: "Gate C",
+        status: "Abnormal",
       },
     ];
 
@@ -93,6 +144,8 @@ export default {
       search,
       headers,
       records,
+      StatusCard,
+      historyRecords,
     };
   },
 };

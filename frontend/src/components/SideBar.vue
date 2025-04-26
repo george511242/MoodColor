@@ -17,6 +17,11 @@
 
     <!-- 側邊欄 Drawer -->
     <v-navigation-drawer app v-model="drawer">
+      <v-list-item
+        title="Hi, Chen"
+        subtitle="check records below"
+      ></v-list-item>
+      <v-divider></v-divider>
       <v-list>
         <v-list-item
           button
