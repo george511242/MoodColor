@@ -13,7 +13,7 @@
 import SideBar from "../components/SideBar.vue";
 
 export default {
-  name: "AttendenceLog",
+  name: "MyTeam",
   components: { SideBar }, // ✅ 正確的結尾
   setup() {},
 };
