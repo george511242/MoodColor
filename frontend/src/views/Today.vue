@@ -61,8 +61,8 @@
 
 <script>
 import { ref } from "vue";
-import SideBar from "../components/SideBar.vue";
 import DataTable from "../components/DataTable.vue";
+import SideBar from "../components/SideBar.vue";
 import StatusCard from "../components/StatusCard.vue";
 
 export default {
@@ -109,7 +109,7 @@ export default {
         checkOutTime: "17:05",
         checkInGate: "Gate B",
         checkOutGate: "Gate C",
-        status: "On-time",
+        status: "On Time",
       },
       {
         date: "2025-04-25",
@@ -127,7 +127,7 @@ export default {
         checkOutTime: "17:15",
         checkInGate: "Gate C",
         checkOutGate: "Gate B",
-        status: "On-time",
+        status: "On Time",
       },
       {
         date: "2025-04-25",
