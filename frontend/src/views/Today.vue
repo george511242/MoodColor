@@ -61,8 +61,8 @@
 
 <script>
 import { ref } from "vue";
-import SideBar from "../components/SideBar.vue";
 import DataTable from "../components/DataTable.vue";
+import SideBar from "../components/SideBar.vue";
 import StatusCard from "../components/StatusCard.vue";
 
 export default {
@@ -105,11 +105,12 @@ export default {
       {
         date: "2025-04-25",
         name: "John Doe",
-        ClockInTime: "08:45",
-        ClockOutTime: "17:05",
-        ClockInGate: "Gate B",
-        ClockOutGate: "Gate C",
-        status: "On time",
+
+        checkInTime: "08:45",
+        checkOutTime: "17:05",
+        checkInGate: "Gate B",
+        checkOutGate: "Gate C",
+        status: "On Time",
       },
       {
         date: "2025-04-25",
@@ -123,11 +124,11 @@ export default {
       {
         date: "2025-04-25",
         name: "John Doe",
-        ClockInTime: "08:30",
-        ClockOutTime: "17:15",
-        ClockInGate: "Gate C",
-        ClockOutGate: "Gate B",
-        status: "On time",
+        checkInTime: "08:30",
+        checkOutTime: "17:15",
+        checkInGate: "Gate C",
+        checkOutGate: "Gate B",
+        status: "On Time",
       },
       {
         date: "2025-04-25",

@@ -124,7 +124,7 @@ import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
 export default {
-  name: "MainPage",
+  name: "MyTeam",
   components: { SelectBox, SideBar, WorkSummaryCard, DataTable, VueDatePicker },
   setup() {
     const selectedDepartment = ref("");

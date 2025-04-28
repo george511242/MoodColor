@@ -12,6 +12,7 @@
     "@mdi/font": "5.9.55",
     "@vuepic/vue-datepicker": "^11.0.2",
     "core-js": "^3.8.3",
+    "date-fns": "^4.1.0",
     "mitt": "^3.0.1",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
@@ -32,7 +33,9 @@
     "jsdom": "^26.1.0",
     "vitest": "^3.1.1",
     "vue-cli-plugin-vuetify": "~2.5.8",
-    "webpack-plugin-vuetify": "^3.1.0"
+
+    "webpack-plugin-vuetify": "^3.1.1"
+
   },
   "eslintConfig": {
     "root": true,
