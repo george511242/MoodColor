@@ -23,10 +23,10 @@
               <tr v-for="item in records" :key="item.name" class="text-center">
                 <td>{{ item.date }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.checkInTime }}</td>
-                <td>{{ item.checkOutTime }}</td>
-                <td>{{ item.checkInGate }}</td>
-                <td>{{ item.checkOutGate }}</td>
+                <td>{{ item.ClockInTime }}</td>
+                <td>{{ item.ClockOutTime }}</td>
+                <td>{{ item.ClockInGate }}</td>
+                <td>{{ item.ClockOutGate }}</td>
                 <td>
                   <StatusCard :content="item.status" />
                 </td>
@@ -49,7 +49,7 @@
 
           <!-- 使用 DataTable 組件，並傳遞資料 -->
           <DataTable
-            :show-headers="headers"
+            :show-headers="headers.text"
             :items="historyRecords"
             :search="search"
           />
@@ -73,10 +73,10 @@ export default {
     const headers = [
       { text: "Date", value: "date" },
       { text: "Name", value: "name" },
-      { text: "Check-In Time", value: "checkInTime" },
-      { text: "Check-Out Time", value: "checkOutTime" },
-      { text: "Check-In Gate", value: "checkInGate" },
-      { text: "Check-Out Gate", value: "checkOutGate" },
+      { text: "ClockInTime", value: "ClockInTime" },
+      { text: "ClockOutTime", value: "ClockOutTime" },
+      { text: "ClockInGate", value: "ClockInGate" },
+      { text: "ClockOutGate", value: "ClockOutGate" },
       { text: "Status", value: "status" },
     ];
 
@@ -84,10 +84,10 @@ export default {
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "09:00",
-        checkOutTime: "17:00",
-        checkInGate: "Gate A",
-        checkOutGate: "Gate B",
+        ClockInTime: "09:00",
+        ClockOutTime: "17:00",
+        ClockInGate: "Gate A",
+        ClockOutGate: "Gate B",
         status: "Late",
       },
     ];
@@ -96,46 +96,46 @@ export default {
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "09:00",
-        checkOutTime: "17:00",
-        checkInGate: "Gate A",
-        checkOutGate: "Gate B",
+        ClockInTime: "09:00",
+        ClockOutTime: "17:00",
+        ClockInGate: "Gate A",
+        ClockOutGate: "Gate B",
         status: "Late",
       },
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "08:45",
-        checkOutTime: "17:05",
-        checkInGate: "Gate B",
-        checkOutGate: "Gate C",
-        status: "On-time",
+        ClockInTime: "08:45",
+        ClockOutTime: "17:05",
+        ClockInGate: "Gate B",
+        ClockOutGate: "Gate C",
+        status: "On time",
       },
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "09:20",
-        checkOutTime: "16:55",
-        checkInGate: "Gate A",
-        checkOutGate: "Gate A",
+        ClockInTime: "09:20",
+        ClockOutTime: "16:55",
+        ClockInGate: "Gate A",
+        ClockOutGate: "Gate A",
         status: "Late",
       },
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "08:30",
-        checkOutTime: "17:15",
-        checkInGate: "Gate C",
-        checkOutGate: "Gate B",
-        status: "On-time",
+        ClockInTime: "08:30",
+        ClockOutTime: "17:15",
+        ClockInGate: "Gate C",
+        ClockOutGate: "Gate B",
+        status: "On time",
       },
       {
         date: "2025-04-25",
         name: "John Doe",
-        checkInTime: "09:10",
-        checkOutTime: "16:40",
-        checkInGate: "Gate B",
-        checkOutGate: "Gate C",
+        ClockInTime: "09:10",
+        ClockOutTime: "16:40",
+        ClockInGate: "Gate B",
+        ClockOutGate: "Gate C",
         status: "Abnormal",
       },
     ];

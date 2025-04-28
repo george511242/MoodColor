@@ -1,10 +1,9 @@
-<!-- src/components/DataTable.vue -->
 <template>
   <v-data-table
     :headers="headers"
     :items="items"
     :search="search"
-    class="elevation-1 text-center"
+    class="elevation-1 text-center custom-header-center td-border-style"
   >
     <template #[`item.status`]="{ item }">
       <StatusCard :content="item.status" />
@@ -39,6 +38,15 @@ export default {
 
 <style scoped>
 :deep(.v-data-table__th) {
-  background-color: #f5f5f5 !important; /* 設置為灰色 */
+  background-color: #f5f5f5 !important;
+  justify-content: center;
+}
+
+:deep(.v-data-table-header__content) {
+  justify-content: center;
+}
+
+#input-v-66 {
+  margin-bottom: 10px; /* 想要多大空間自己調，比如16px */
 }
 </style>
