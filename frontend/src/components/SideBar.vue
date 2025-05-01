@@ -4,14 +4,14 @@
     <v-app-bar app color="white" elevation="2">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-img
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROTxcu9w5BKsCZKZHy2Yw8MJAnV6l-9mYp0g&s"
+        src="@/assets/logo.png"
         max-width="40"
         max-height="32"
         class="ml-2"
         contain
       ></v-img>
       <v-toolbar-title style="font-size: 25px; font-weight: bold"
-        >HR-In-Out System</v-toolbar-title
+        >Your Mood Color Journey</v-toolbar-title
       >
     </v-app-bar>
 
@@ -25,11 +25,11 @@
       <v-list>
         <v-list-item
           button
-          @click="goToTodo('/today')"
+          @click="goToTodo('/home')"
           class="d-flex align-center"
         >
           <v-icon class="mr-2">mdi-folder-open</v-icon>
-          Today
+          home
         </v-list-item>
         <v-list-item
           button
@@ -41,11 +41,11 @@
         </v-list-item>
         <v-list-item
           button
-          @click="goToTodo('/myTeam')"
+          @click="goToTodo('/analysis')"
           class="d-flex align-center"
         >
           <v-icon class="mr-2">mdi-account-group</v-icon>
-          My team
+          Anaylsis
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

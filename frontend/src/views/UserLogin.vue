@@ -39,7 +39,7 @@ export default {
     const router = useRouter();
 
     function goToTodo() {
-      router.push("/today");
+      router.push("/home");
     }
 
     return {
