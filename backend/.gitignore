@@ -19,11 +19,14 @@ Thumbs.db
 .vscode/
 .idea/
 
-
-
 # Build artifacts (如果有打包產物)
 dist/
 build/
 
 # Others (如果有測試或 coverage)
 coverage/
+
+# Google OAuth
+credentials.json
+token.pickle
+*.pickle
