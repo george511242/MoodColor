@@ -26,6 +26,7 @@ build/
 # Others (如果有測試或 coverage)
 coverage/
 
+<<<<<<< HEAD
 # Python
 __pycache__/
 *.py[cod]
@@ -55,3 +56,9 @@ ENV/
 # Google OAuth
 credentials.json
 token.pickle
+=======
+# Google OAuth
+credentials.json
+token.pickle
+*.pickle
+>>>>>>> clean_changes
