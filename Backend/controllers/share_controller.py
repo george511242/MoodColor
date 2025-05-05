@@ -84,3 +84,47 @@ def accept_invite(userid: int, anotheruserid: int, diary_id: int):
         raise HTTPException(status_code=500, detail="Failed to update share record.")
 
     return {"status": "success"}
+
+def fetch_color(userid: int, anotheruserid: int):
+    # 查詢 SHARED_DASHBOARD 表，檢查該用戶是否有分享紀錄，並確保 request_state 為 True
+    shared_record = supabase.table("SHARED_DASHBOARD")\
+        .select("*")\
+        .eq("owner_user_id", userid)\
+        .eq("shared_with_user_id", anotheruserid)\
+        .eq("request_state", True)\
+        .order("share_time", desc=True)\
+        .limit(1)\
+        .execute()
+
+    # 如果沒有找到符合條件的分享紀錄
+    if not shared_record.data:
+        raise HTTPException(status_code=404, detail="未分享")
+
+    # 獲取對應的 diary_id
+    diary_id = shared_record.data[0]["diary_entry_id"]
+
+    # 查詢 DIARY_ENTRY 表，根據 diary_id 查找顏色（hex_color_code）和擁有者名稱
+    diary_record = supabase.table("DIARY_ENTRY")\
+        .select("hex_color_code", "user_id")\
+        .eq("id", diary_id)\
+        .execute()
+
+    if not diary_record.data or not diary_record.data[0].get("hex_color_code"):
+        raise HTTPException(status_code=404, detail="未找到顏色資料")
+
+    hex_color_code = diary_record.data[0]["hex_color_code"]
+
+    # 查詢 USER 表，根據 user_id 獲取用戶名稱
+    user_record = supabase.table("USER")\
+        .select("username")\
+        .eq("id", diary_record.data[0]["user_id"])\
+        .execute()
+
+    if not user_record.data:
+        raise HTTPException(status_code=404, detail="未找到用戶資料")
+
+    # 返回顏色和用戶名稱
+    return {
+        "hex": hex_color_code,  # 確保返回的值是字串
+        "owner_name": user_record.data[0]["username"] if user_record.data else None
+    }

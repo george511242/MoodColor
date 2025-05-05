@@ -26,7 +26,7 @@ app.include_router(journal_router, prefix="/api")
 app.include_router(mood_tree_router, prefix="/api")
 app.include_router(share_router, prefix="/api")  # 將新的 share 路由加入
 app.include_router(emoji_router.router)
-app.include_router(share_router, prefix="/api")
+
 
 @app.get("/")
 async def root():

@@ -1,7 +1,8 @@
 # routes/share.py
 from fastapi import APIRouter, HTTPException
 from schemas.share import ShareResponse
-from controllers.share_controller import share_with_friend, accept_invite
+from controllers.share_controller import share_with_friend, accept_invite, fetch_color
+from schemas.fetch_color import FetchColor
 from schemas.accept_response import AcceptResponse
 
 router = APIRouter()
@@ -20,4 +21,9 @@ async def share_with_friend_route(userid: int, anotheruserid: int, diary_id: int
 @router.post("/accept/{userid}/{anotheruserid}/{diary_id}", response_model=AcceptResponse)
 async def accept_invite_route(userid: int, anotheruserid: int, diary_id: int):
     result = accept_invite(userid, anotheruserid, diary_id)
+    return result
+
+@router.get("/fetch_color/{userid}/{anotheruserid}", response_model=FetchColor)
+async def fetch_color_route(userid: int, anotheruserid: int):
+    result = fetch_color(userid, anotheruserid)
     return result
