@@ -5,6 +5,7 @@ from routes.user import router as user_router
 from routes.diary import router as diary_router
 from routes.journal import router as journal_router
 from routes.mood_tree import router as mood_tree_router
+from routes.share import router as share_router  # 引入新的 share 路由
 from routers import emoji_router
 
 app = FastAPI()
@@ -23,7 +24,9 @@ app.include_router(user_router, prefix="/api")
 app.include_router(diary_router, prefix="/api")
 app.include_router(journal_router, prefix="/api")
 app.include_router(mood_tree_router, prefix="/api")
+app.include_router(share_router, prefix="/api")  # 將新的 share 路由加入
 app.include_router(emoji_router.router)
+app.include_router(share_router, prefix="/api")
 
 @app.get("/")
 async def root():
