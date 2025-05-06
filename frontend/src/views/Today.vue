@@ -25,6 +25,7 @@
 
           <!-- 如果需要你也可以在這裡添加其他欄位 -->
         </v-row>
+        >>>>>>> 727848d009f89a63005fc745fa744479fa1c61fa
       </v-container>
     </SideBar>
   </v-app>
@@ -32,11 +33,14 @@
 
 <script>
 import SideBar from "../components/SideBar.vue";
+
 import CalenderView from "../components/Calender.vue";
+
 export default {
   name: "MainPage",
   components: {
     SideBar,
+
     CalenderView,
   },
   setup() {},
