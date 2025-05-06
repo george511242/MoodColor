@@ -28,6 +28,7 @@
 
 <script>
 import { useRouter } from "vue-router";
+
 import SideBar from "../components/SideBar.vue";
 
 export default {
@@ -35,6 +36,7 @@ export default {
   components: {
     SideBar, // ✅ 在這裡註冊才會生效
   },
+
   setup() {
     const router = useRouter();
 
