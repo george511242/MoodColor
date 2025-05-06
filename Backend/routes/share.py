@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 from schemas.share import ShareResponse
 from controllers.share_controller import share_with_friend, accept_invite, fetch_color
-from schemas.fetch_color import FetchColor
+from schemas.color import FetchColor
 from schemas.accept_response import AcceptResponse
 
 router = APIRouter()

@@ -1,47 +1,40 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path
 from controllers.emoji_controller import get_this_month_emoji
 from schemas.emoji import ThisMonthEmojiResponse
 import logging
 
+# 設置日誌
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-router = APIRouter()
+router = APIRouter(
+    tags=["emoji"]
+)
 
-@router.get("/this_month_emoji/{year_month}", response_model=ThisMonthEmojiResponse)
-async def get_monthly_emoji(year_month: str):
+@router.get("/this_month_emoji/{user_id}/{year_month}", response_model=ThisMonthEmojiResponse)
+async def get_monthly_emoji(
+    user_id: int = Path(..., description="用戶 ID"),
+    year_month: str = Path(..., description="格式為 YYYY-MM 的月份字符串")
+):
     """
-    獲取指定月份的每日 emoji 數據
+    獲取指定用戶在指定月份的每日 emoji 數據
     
     Args:
+        user_id (int): 用戶 ID
         year_month (str): 格式為 "YYYY-MM" 的月份字符串
         
     Returns:
         ThisMonthEmojiResponse: 包含該月份所有日期的 emoji 數據
     """
     try:
-        logger.info(f"收到請求: /this_month_emoji/{year_month}")
-        
-        # 驗證年月格式
-        try:
-            year, month = map(int, year_month.split('-'))
-            if not (1 <= month <= 12):
-                raise ValueError("Month must be between 1 and 12")
-        except ValueError as e:
-            logger.error(f"無效的年月格式: {year_month}")
-            raise HTTPException(
-                status_code=400,
-                detail="Invalid year_month format. Expected format: YYYY-MM"
-            )
-        
-        result = get_this_month_emoji(year_month)
-        logger.info(f"成功返回數據: {result}")
-        return result
-        
-    except HTTPException:
-        raise
+        logger.info(f"API 請求: 獲取用戶 {user_id} 在 {year_month} 的 emoji 數據")
+        return get_this_month_emoji(user_id, year_month)
+    except HTTPException as e:
+        logger.error(f"API 錯誤: {str(e)}")
+        raise e
     except Exception as e:
-        logger.error(f"處理請求時發生錯誤: {str(e)}", exc_info=True)
+        logger.error(f"API 內部錯誤: {str(e)}")
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=f"Internal server error: {str(e)}"
         ) 
