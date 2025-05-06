@@ -5,31 +5,37 @@
 <script>
 import { onMounted } from "vue";
 import { Calendar } from "vanilla-calendar-pro";
-
-// 你可以選擇性的引入不同的樣式
 import "vanilla-calendar-pro/styles/index.css";
-// import 'vanilla-calendar-pro/styles/layout.css'
-// import 'vanilla-calendar-pro/styles/themes/light.css'
-// import 'vanilla-calendar-pro/styles/themes/dark.css'
 
 export default {
   name: "CalenderView",
-  setup() {
+  emits: ["update:date"], // Declare the event name
+  setup(props, { emit }) {
+    // Destructure emit from context
     onMounted(() => {
       const calendar = new Calendar("#calendar", {
         settings: {
           lang: "en",
           selection: {
-            day: "single",
+            day: "single", // Single-day selection mode
           },
         },
+        onClickDate(self) {
+          const selected = self.context.selectedDates?.[0];
+          console.log("Clicked date:", selected);
+
+          // Emit the date change event to the parent
+          emit("update:date", selected);
+        },
       });
-      calendar.init();
+
+      calendar.init(); // Initialize the calendar
+      console.log("Calendar initialized");
     });
   },
 };
 </script>
 
 <style scoped>
-/* 可加上自訂樣式微調 */
+/* You can add custom styles here */
 </style>
