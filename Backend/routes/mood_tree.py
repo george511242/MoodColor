@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from datetime import datetime, timedelta
-from schemas.mood_tree_color import MoodTreeColorResponse
+from schemas.color import MoodTreeColorResponse
 from controllers.mood_tree_controller import get_yesterday_mood_color
 
 router = APIRouter()

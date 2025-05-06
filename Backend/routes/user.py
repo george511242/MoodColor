@@ -6,7 +6,7 @@ from schemas.user import UserCreate, UserResponse
 from typing import Optional
 from datetime import datetime
 
-router = APIRouter()
+router = APIRouter(tags=["user"])
 
 @router.get("/user/{user_id}")
 def read_user(user_id: int):

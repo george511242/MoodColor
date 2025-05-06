@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel
 from datetime import date, datetime
 from typing import Optional
 
@@ -8,7 +8,7 @@ class DiaryEntryCreate(BaseModel):
     """
     user_id: int
     entry_date: date
-    content: str  # 前端使用 content
+    content_text: str  # 前端使用 content
     mood_icon_code: str
 
 class DiaryEntry(DiaryEntryCreate):
@@ -16,22 +16,17 @@ class DiaryEntry(DiaryEntryCreate):
     日記條目的完整模型，包含所有欄位
     """
     id: int
-    hex_color_code: Optional[str] = None
-    created_at: Optional[str] = None
-    updated_at: Optional[str] = None
-
-    class Config:
-        from_attributes = True
+    hex_color_code: str
+    created_at: datetime
+    photo_url: str
 
 class DiaryEntryResponse(BaseModel):
     """
     日記條目的響應模型
     """
-    id: int
-    user_id: int
-    content_text: str  # 資料庫使用 content_text
-    hex_color_code: Optional[str]
-    mood_icon_code: str
+    status: str
+    diary_entry: DiaryEntry
+
+class DeleteDiaryResponse(BaseModel):
+    status: str
     entry_date: date
-    created_at: datetime
-    updated_at: Optional[datetime] = None 
