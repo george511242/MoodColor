@@ -55,7 +55,7 @@ export default {
 
   grid-template-columns: auto auto; /* 設定列 (column) 大小 */
   grid-template-rows: auto auto auto;
-  gap: 15px;
+  gap: 20px;
 }
 .item {
   grid-column: 2; /* 放在第 2 欄 */

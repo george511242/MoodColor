@@ -17,28 +17,16 @@
 
     <!-- 側邊欄 Drawer -->
     <v-navigation-drawer app v-model="drawer">
-      <v-list-item
-        title="Hi, Chen"
-        subtitle="check records below"
-      ></v-list-item>
-      <v-divider></v-divider>
       <v-list>
         <v-list-item
           button
           @click="goToTodo('/home')"
           class="d-flex align-center"
         >
-          <v-icon class="mr-2">mdi-folder-open</v-icon>
+          <v-icon class="mr-2">mdi-home</v-icon>
           home
         </v-list-item>
-        <v-list-item
-          button
-          @click="goToTodo('/attendenceLog')"
-          class="d-flex align-center"
-        >
-          <v-icon class="mr-2">mdi-calendar-check</v-icon>
-          Attendence Log
-        </v-list-item>
+
         <v-list-item
           button
           @click="goToTodo('/analysis')"
