@@ -1,16 +1,23 @@
-from fastapi import APIRouter, UploadFile, File, Form
-from controllers.diary_controller import add_diary_entry
+from fastapi import APIRouter, UploadFile, HTTPException, File, Form
+from controllers.diary_controller import add_diary_entry, get_diary_entry_by_date, delete_by_date
 from controllers.google_drive_controller import upload_image_to_drive
 from fastapi.responses import JSONResponse
-from schemas.diary import DiaryEntryCreate, DiaryEntryResponse
-from datetime import datetime
+from schemas.diary import DiaryEntryCreate, DiaryEntryResponse, DeleteDiaryResponse
 import tempfile
 import os
+from datetime import date
+from starlette.concurrency import run_in_threadpool
 
-router = APIRouter()
+router = APIRouter(tags=["diary"])
 
-@router.post("/diary", response_model=DiaryEntryResponse)
-async def create_diary_entry(entry: DiaryEntryCreate):
+@router.post("/Post_diary_entry/{userid}/{date}")
+async def post_diary_entry(
+    user_id: int              = Form(...),
+    entry_date: date          = Form(...),
+    content_text: str         = Form(...),
+    mood_icon_code: str       = Form(...),
+    file: UploadFile | None   = File(None)
+):
     """
     Create a new diary entry.
     
@@ -20,53 +27,64 @@ async def create_diary_entry(entry: DiaryEntryCreate):
     Returns:
         JSONResponse: The created diary entry or an error message
     """
-    try:
-        # Convert Pydantic model to dict
-        entry_data = entry.dict()
-        
-        # Add the entry to the database
-        result = add_diary_entry(entry_data)
-        
-        return JSONResponse(
-            status_code=201,
-            content={"message": "Diary entry created successfully", "entry": result}
-        )
-    except Exception as e:
-        return JSONResponse(
-            status_code=400,
-            content={"message": str(e)}
-        )
 
-@router.post("/diary/upload-image")
-async def upload_diary_image(file: UploadFile = File(...)):
+    entry = DiaryEntryCreate(
+        user_id        = user_id,
+        entry_date     = entry_date,
+        content_text   = content_text,
+        mood_icon_code = mood_icon_code
+    )
+
+    try:
+        # ——— 1. 处理图片上传 ———
+        photo_url: str | None = None
+        if file:
+            ext = os.path.splitext(file.filename)[1]
+            data = await file.read()  # 一定要 await
+            with tempfile.NamedTemporaryFile(delete=False, suffix=ext) as tmp:
+                tmp.write(data)
+                tmp_path = tmp.name
+
+            # call sync upload in threadpool to avoid blocking
+            photo_url = await run_in_threadpool(upload_image_to_drive, tmp_path)
+            os.unlink(tmp_path)
+
+        # Add the entry to the database
+        diary_entry = add_diary_entry(entry, photo_url=photo_url)
+        
+        return {"status": "success", "diary_entry": diary_entry}
+    
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    
+@router.get("/Get_diary_entry/{userid}/{date}")
+async def get_diary_entry(user_id: int, entry_date: date):
     """
-    Upload an image for a diary entry.
+    Get a diary entry by user ID and entry date.
     
     Args:
-        file (UploadFile): The image file to upload
+        user_id (int): The ID of the user
+        entry_date (date): The date of the diary entry (format: YYYY-MM-DD)
         
     Returns:
-        JSONResponse: The URL of the uploaded image or an error message
+        JSONResponse: The diary entry or an error message
     """
     try:
-        # 創建臨時文件
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
-            content = await file.read()
-            temp_file.write(content)
-            temp_file_path = temp_file.name
+        # Call the controller function to get the diary entry
+        diary_entry = get_diary_entry_by_date(user_id, entry_date)
         
-        # 上傳到 Google Drive
-        image_url = upload_image_to_drive(temp_file_path)
-        
-        # 刪除臨時文件
-        os.unlink(temp_file_path)
-        
-        return JSONResponse(
-            status_code=200,
-            content={"message": "Image uploaded successfully", "image_url": image_url}
-        )
+        return {"status": "success", "diary_entry": diary_entry}
+    
     except Exception as e:
-        return JSONResponse(
-            status_code=400,
-            content={"message": str(e)}
-        ) 
+        return {"status": "error", "message": str(e)}
+    
+@router.delete("/delete/{journal_date}", response_model=DeleteDiaryResponse)
+async def delete_journey(journal_date: date):
+    result = delete_by_date(journal_date)
+    
+    if result["status"] == "error":
+        raise HTTPException(status_code=400, detail=result["message"])
+    
+    return result
+
+
