@@ -1,12 +1,7 @@
 <template>
   <SideBar>
     <div class="login-page" style="text-align: center; margin-top: 60px">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/zh/thumb/8/83/Taiwan_Semiconductor_Manufacturing_Co_logo.svg/1200px-Taiwan_Semiconductor_Manufacturing_Co_logo.svg.png"
-        alt="TSMC Logo"
-        style="max-width: 100px; max-height: 100px"
-        class="login-icon"
-      />
+      <img :src="logo" alt="Logo" style="width: 100px; height: 100px" />
       <h2>Login</h2>
       <v-text-field
         clearable
@@ -30,6 +25,7 @@
 import { useRouter } from "vue-router";
 
 import SideBar from "../components/SideBar.vue";
+import logo from "@/assets/logo.png";
 
 export default {
   name: "UserLogin",
@@ -46,6 +42,7 @@ export default {
 
     return {
       goToTodo,
+      logo,
     };
   },
 };
@@ -65,7 +62,7 @@ h2 {
 }
 .centered-input {
   max-width: 500px;
-  width: 100%;
+  width: 500px;
   margin: 0 auto;
 }
 </style>
