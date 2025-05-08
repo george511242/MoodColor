@@ -7,6 +7,13 @@ Users can maintain a daily mood journal through a calendar-like dashboard, uploa
 This project aims to bring emotional awareness and a touch of healing by helping users visualize their feelings in color. Ideal for personal reflection, mood tracking, or simply expressing your day through design.
 
 Built with modern technologies and supports extensibility via AI, containerized infrastructure, and modular event-driven architecture.
+🎨 MoodColor 是一款由 AI 驅動的情緒追蹤工具，能將你的每日經歷——無論是文字或照片——轉化為代表當下情緒狀態的顏色。無論你感受到的是喜悅、平靜，還是細膩的憂鬱，系統都能分析你的輸入，並以 HEX 色碼的方式，視覺化地呈現你的感受。
+
+使用者可透過類似行事曆的儀表板，維持每日情緒日記，並上傳內容、反思自己的情緒旅程。該平台不僅會根據情緒創建圖示與主題頁面，還支援多人協作，讓朋友或團隊一同共創、分享彼此的情感色彩故事。
+
+本專案的目標是藉由「將情緒視覺化」來提升情感覺察力，帶來療癒的一點光。非常適合用於個人反思、情緒追蹤，或單純以設計方式表達你的一天。
+
+採用現代化技術建構，支援 AI 擴充、容器化基礎架構與模組化事件驅動架構。
 
 ## Backend
 
