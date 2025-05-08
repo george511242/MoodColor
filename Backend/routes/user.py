@@ -1,6 +1,6 @@
 # Backend/routes/user.py
 from fastapi import APIRouter
-from controllers.user_controller import get_user_by_id, add_user
+from controllers.user_controller import get_user_by_id, add_user, check_user_exists
 from fastapi.responses import JSONResponse
 from schemas.user import UserCreate, UserResponse
 from typing import Optional
@@ -29,3 +29,20 @@ async def create_user(user: UserCreate):
             status_code=400,
             content={"message": str(e)}
         )
+
+# write an api that apply the login and set email as the acocunt
+@router.get("/user/email/{email}")
+async def login_user(email: str):
+    response = check_user_exists(email)
+    if response:
+        return JSONResponse(
+            status_code=200,
+            content={"status": "success", "userid": response}
+        )
+    else:
+        return JSONResponse(
+            status_code=404,
+            content={"status": "error", "message": "User not found"}
+        )
+
+        

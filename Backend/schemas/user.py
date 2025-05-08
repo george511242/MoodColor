@@ -10,4 +10,4 @@ class UserResponse(BaseModel):
     username: str
     email: str
     password_hash: str
-    created_at: datetime 
+    created_at: datetime

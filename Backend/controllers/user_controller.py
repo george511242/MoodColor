@@ -25,3 +25,11 @@ def add_user(user_data: dict):
     
     return response.data[0]
 
+def check_user_exists(email: str):
+    response = supabase.table("USER").select("*").eq("email", email).execute()
+    # if user exists, return userid, else return False
+    if response.data:
+        return response.data[0]["id"]
+    else:
+        return False
+    return len(response.data) > 0
