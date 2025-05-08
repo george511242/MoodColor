@@ -47,6 +47,6 @@ export default {
 }
 
 #input-v-66 {
-  margin-bottom: 10px; /* 想要多大空間自己調，比如16px */
+  margin-bottom: 16px; /* 想要多大空間自己調，比如16px */
 }
 </style>
