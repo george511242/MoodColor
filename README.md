@@ -24,7 +24,7 @@ Built with modern technologies and supports extensibility via AI, containerized 
 
 ### 1. 設定 .env 檔案
 
-在專案根目錄下，建立一個名為 `.env` 的檔案。此檔案將儲存你的 API 金鑰及其他機密設定。
+在`Backend`根目錄下，建立一個名為 `.env` 的檔案。此檔案將儲存你的 API 金鑰及其他機密設定。
 
 #### 範例 `.env` 內容：
 ```env
