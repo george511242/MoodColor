@@ -31,9 +31,9 @@ async def create_user(user: UserCreate):
         )
 
 # write an api that apply the login and set email as the acocunt
-@router.get("/user/email/{email}")
-async def login_user(email: str):
-    response = check_user_exists(email)
+@router.get("/user/login/{email}/{password}")
+async def login_user(email: str, password: str):
+    response = check_user_exists(email, password)
     if response:
         return JSONResponse(
             status_code=200,
@@ -42,7 +42,7 @@ async def login_user(email: str):
     else:
         return JSONResponse(
             status_code=404,
-            content={"status": "error", "message": "User not found"}
+            content={"status": "error", "message": "User not found or password incorrect"}
         )
 
         
