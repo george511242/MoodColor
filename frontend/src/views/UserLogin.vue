@@ -1,68 +1,97 @@
 <template>
-  <SideBar>
-    <div class="login-page" style="text-align: center; margin-top: 60px">
-      <img :src="logo" alt="Logo" style="width: 100px; height: 100px" />
-      <h2>Login</h2>
-      <v-text-field
-        clearable
-        label="Account"
-        variant="outlined"
-        class="centered-input"
-      />
-      <v-text-field
-        clearable
-        label="Password"
-        variant="outlined"
-        class="centered-input"
-      />
+  <div class="login-wrapper">
+    <h1 class="gradient-title">Mood Color</h1>
+    <div class="input-box">
+      <v-card
+        class="mx-auto pa-12 pb-8"
+        elevation="8"
+        max-width="448"
+        rounded="lg"
+      >
+        <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
-      <v-btn height:20px variant="tonal" @click="goToTodo"> Submit </v-btn>
+        <v-text-field
+          density="compact"
+          placeholder="Email address"
+          prepend-inner-icon="mdi-email-outline"
+          variant="outlined"
+        ></v-text-field>
+
+        <div
+          class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between"
+        >
+          Password
+
+          <a
+            class="text-caption text-decoration-none text-blue"
+            href="#"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Forgot login password?</a
+          >
+        </div>
+
+        <v-text-field
+          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+          :type="visible ? 'text' : 'password'"
+          density="compact"
+          placeholder="Enter your password"
+          prepend-inner-icon="mdi-lock-outline"
+          variant="outlined"
+          @click:append-inner="visible = !visible"
+        ></v-text-field>
+
+        <v-card class="mb-12" color="surface-variant" variant="tonal">
+          <v-card-text class="text-medium-emphasis text-caption">
+            Warning: After 3 consecutive failed login attempts, you account will
+            be temporarily locked for three hours.
+          </v-card-text>
+        </v-card>
+
+        <v-btn class="mb-8" color="blue" size="large" variant="tonal" block>
+          Log In
+        </v-btn>
+
+        <v-card-text class="text-center">
+          <a
+            class="text-blue text-decoration-none"
+            href="#"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
+          </a>
+        </v-card-text>
+      </v-card>
     </div>
-  </SideBar>
+  </div>
 </template>
 
-<script>
-import { useRouter } from "vue-router";
-
-import SideBar from "../components/SideBar.vue";
-import logo from "@/assets/logo.png";
-
-export default {
-  name: "UserLogin",
-  components: {
-    SideBar, // ✅ 在這裡註冊才會生效
-  },
-
-  setup() {
-    const router = useRouter();
-
-    function goToTodo() {
-      router.push("/home");
-    }
-
-    return {
-      goToTodo,
-      logo,
-    };
-  },
-};
-</script>
+<script setup></script>
 
 <style scoped>
-h2 {
-  margin: 10px auto;
-  font-size: 30px;
-}
-
-.login-page {
+.login-wrapper {
+  background: linear-gradient(135deg, #a8e6cf, #56ab2f); /* 綠色漸層 */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* 這樣內容（input, button）就會置中 */
-  margin-top: 0px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 10px;
 }
-.centered-input {
-  max-width: 500px;
-  width: 500px;
-  margin: 0 auto;
+.gradient-title {
+  font-size: 70px;
+  font-weight: bold;
+  text-align: center;
+
+  background: linear-gradient(90deg, #ec008c, #fcb7d4); /* 粉紅漸層 */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  margin-bottom: 24px;
 }
 </style>
