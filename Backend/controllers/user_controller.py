@@ -25,8 +25,10 @@ def add_user(user_data: dict):
     
     return response.data[0]
 
-def check_user_exists(email: str):
-    response = supabase.table("USER").select("*").eq("email", email).execute()
+def check_user_exists(email: str, password: Optional[str] = None):
+    # If password is not provided, just check if the user exists
+    response = supabase.table("USER").select("*").eq("email", email).eq("password_hash", password).execute()
+    
     # if user exists, return userid, else return False
     if response.data:
         return response.data[0]["id"]
