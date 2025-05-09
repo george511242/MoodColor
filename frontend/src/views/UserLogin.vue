@@ -78,6 +78,9 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -100,14 +103,14 @@ const handleLogin = async () => {
 
     // 假設後端會回傳成功訊息
     if (response.data.success) {
-      alert("登入成功");
-      // 這裡可以進行後續操作，例如將使用者導向首頁等
+      alert("註冊成功");
+      router.push("/home");
     } else {
       alert("登入失敗：" + response.data.message);
     }
   } catch (error) {
-    console.error("登入錯誤", error);
-    alert("登入時發生錯誤，請稍後再試");
+    console.error("註冊錯誤", error);
+    alert("註冊時發生錯誤，請稍後再試");
   }
 };
 </script>

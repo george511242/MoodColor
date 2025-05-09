@@ -52,6 +52,9 @@ import api from "@/api"; // @ 代表 src 目錄
 const name = ref("");
 const email = ref("");
 const password = ref("");
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const register = async () => {
   try {
@@ -59,21 +62,21 @@ const register = async () => {
       alert("空值存在，請補齊資訊");
       return;
     }
-    console.log(name);
+    console.log(name.value);
 
     // 發送登入請求到後端
-    const response = await api.post("/user", {
-      name: name.value,
+    const response = await api.post("/api/user", {
+      username: name.value,
       email: email.value,
-      password: password.value,
+      password_hash: password.value,
     });
 
-    // 假設後端會回傳成功訊息
-    if (response.data.success) {
-      alert("登入成功");
-      // 這裡可以進行後續操作，例如將使用者導向首頁等
+    // 成功
+    if (response.data.message === "User created successfully") {
+      alert("註冊成功");
+      router.push("/");
     } else {
-      alert("登入失敗：" + response.data.message);
+      alert("登入結果：" + response.data.message);
     }
   } catch (error) {
     console.error("登入錯誤", error);
