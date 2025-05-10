@@ -20,7 +20,7 @@
         </div>
 
         <div class="journal">
-          <h2>Date: {{ parentPickedDate }}</h2>
+          <h2>Date: {{ parentPickedDate }} userID{{ userId }}</h2>
           <v-textarea
             label="Input"
             variant="outlined"
@@ -35,30 +35,23 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, computed } from "vue";
 import SideBar from "../components/SideBar.vue";
 import CalenderView from "../components/Calender.vue";
 import DialogBox from "../components/Dialogs.vue";
 import ColorCircle from "../components/ColorCircle.vue";
 
-import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
 
-export default {
-  name: "MainPage",
-  components: {
-    SideBar,
-    CalenderView,
-    DialogBox,
-    ColorCircle,
-  },
-  setup() {
-    const parentPickedDate = ref(""); // Initialize parentPickedDate as a reactive reference
+const userStore = useUserStore();
+const userId = computed(() => userStore.userId);
 
-    return {
-      parentPickedDate, // Expose to template for binding
-    };
-  },
-};
+const parentPickedDate = ref(""); // Reactive reference
+
+onMounted(() => {
+  console.log("userId from Pinia:", userId);
+});
 </script>
 
 <style scoped>
