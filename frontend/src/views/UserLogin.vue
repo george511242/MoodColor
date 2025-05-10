@@ -15,7 +15,7 @@
           placeholder="Email address"
           prepend-inner-icon="mdi-email-outline"
           variant="outlined"
-          v-modal="email"
+          v-model="email"
         ></v-text-field>
 
         <div
@@ -40,7 +40,7 @@
           prepend-inner-icon="mdi-lock-outline"
           variant="outlined"
           @click:append-inner="visible = !visible"
-          v-modal="passowrd"
+          v-model="password"
         ></v-text-field>
 
         <v-card class="mb-12" color="surface-variant" variant="tonal">
@@ -77,7 +77,8 @@
 
 <script setup>
 import { ref } from "vue";
-import axios from "axios";
+import { useUserStore } from "@/stores/user";
+import api from "@/api"; // @ 代表 src 目錄
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -96,14 +97,18 @@ const handleLogin = async () => {
     }
 
     // 發送登入請求到後端
-    const response = await axios.post("/api/login", {
-      email: email.value,
-      password: password.value,
-    });
+    const response = await api.get(
+      `/api/user/login/${encodeURIComponent(email.value)}/${encodeURIComponent(
+        password.value
+      )}`
+    );
 
     // 假設後端會回傳成功訊息
-    if (response.data.success) {
-      alert("註冊成功");
+    if (response.data.status === "success") {
+      alert("登入成功");
+      const userStore = useUserStore();
+      userStore.setUserId(response.data.userid);
+
       router.push("/home");
     } else {
       alert("登入失敗：" + response.data.message);
@@ -111,6 +116,7 @@ const handleLogin = async () => {
   } catch (error) {
     console.error("註冊錯誤", error);
     alert("註冊時發生錯誤，請稍後再試");
+
   }
 };
 </script>
