@@ -9,7 +9,7 @@ class DiaryEntryCreate(BaseModel):
     user_id: int
     entry_date: date
     content_text: str  # 前端使用 content
-    mood_icon_code: str
+    mood_icon_code: Optional[str] = None
 
 class DiaryEntry(DiaryEntryCreate):
     """
@@ -18,7 +18,7 @@ class DiaryEntry(DiaryEntryCreate):
     id: int
     hex_color_code: str
     created_at: datetime
-    photo_url: str
+    photo_url: Optional[str] = None
 
 class DiaryEntryResponse(BaseModel):
     """

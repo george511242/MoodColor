@@ -10,7 +10,7 @@ from starlette.concurrency import run_in_threadpool
 
 router = APIRouter(tags=["diary"])
 
-@router.post("/Post_diary_entry/{userid}/{date}")
+@router.post("/Post_diary_entry")
 async def post_diary_entry(
     user_id: int              = Form(...),
     entry_date: date          = Form(...),

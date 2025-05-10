@@ -108,6 +108,7 @@ const handleLogin = async () => {
       alert("登入成功");
       const userStore = useUserStore();
       userStore.setUserId(response.data.userid);
+      localStorage.setItem("userId", response.data.userid);
 
       router.push("/home");
     } else {
@@ -116,7 +117,6 @@ const handleLogin = async () => {
   } catch (error) {
     console.error("註冊錯誤", error);
     alert("註冊時發生錯誤，請稍後再試");
-
   }
 };
 </script>
