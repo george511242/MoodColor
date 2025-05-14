@@ -16,5 +16,5 @@ async def get_mood_tree_color(user_id: int, date: str):
     # 從控制器中獲取指定日期的情緒顏色資料
     result = get_mood_color_by_date_and_user(date_obj, user_id)
     
-    # 返回顏色和用戶名稱
+    # 返回顏色、用戶名稱和內容
     return result
