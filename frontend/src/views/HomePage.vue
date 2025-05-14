@@ -18,7 +18,7 @@
           </keep-alive>
 
           <div class="color-circle-wrapper">
-            <ColorCircle :date="parentPickedDate" :color="color" />
+            <ColorCircle :date="parentPickedDate" :color="color" :text="text" />
           </div>
         </div>
 
@@ -61,6 +61,7 @@ const isLoading = ref(false);
 const parentPickedDate = ref(""); // 用戶選的日期
 const journalText = ref(""); // 用戶輸入的日記內容
 const color = ref(""); // 用來儲存顏色
+const text = ref("");
 
 // 預設頁面日期為今天
 onMounted(() => {
@@ -97,7 +98,9 @@ const fetchColorForDate = async (selectedDate) => {
 
     // 获取并设置颜色
     color.value = response.data.hex;
+    text.value = response.data.content_text;
     localStorage.setItem("lastColor", color.value); // 将颜色存储到 localStorage 中
+    localStorage.setItem("lastText", text.value); // 将文本存储到 localStorage 中
   } catch (error) {
     console.error("獲取顏色失敗:", error);
     alert("今天還沒留下日記唷！");
