@@ -23,7 +23,7 @@
         </div>
 
         <div class="journal">
-          <h2>Date: {{ parentPickedDate }} userID{{ userId }}</h2>
+          <h2>Date: {{ parentPickedDate }} </h2>
           <v-textarea
             label="Input"
             variant="outlined"
@@ -150,11 +150,12 @@ const submitJournal = async () => {
 
 
 <style scoped>
+
 .container {
   display: grid;
   margin-top: 30px;
   grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto  ;
   gap: 40px;
 }
 .item {
@@ -178,16 +179,17 @@ const submitJournal = async () => {
   color: #1976d2;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-.color-circle-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
 .square-card[data-v-19047e93] {
-  width: 80%;
-  height: 250px;
+  width: 450px;
+  height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
+.color-circle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
 </style>

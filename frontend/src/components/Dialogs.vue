@@ -3,7 +3,7 @@
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
         v-bind="activatorProps"
-        color="grey"
+        color="pink-lighten-5"
         text="A sentence for you today"
         variant="flat"
       ></v-btn>
