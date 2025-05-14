@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{ backgroundColor: red }">
+  <v-app>
     <SideBar>
       <div class="container">
         <div class="item infobar">
@@ -13,7 +13,10 @@
           </v-avatar>
         </div>
         <div>
-          <CalenderView @update:date="parentPickedDate = $event" />
+          <keep-alive>
+            <CalenderView @update:date="fetchColorForDate" />
+          </keep-alive>
+
           <div class="color-circle-wrapper">
             <ColorCircle :date="parentPickedDate" :color="color" />
           </div>
@@ -27,8 +30,14 @@
             style="height: 300px"
             v-model="journalText"
           ></v-textarea>
-          <v-btn class="submit-button" color="white" @click="submitJournal">
-            Submit
+          <v-btn 
+            :disabled="isLoading"  
+            class="submit-button" 
+            color="white" 
+            @click="submitJournal"
+          >
+            <span v-if="isLoading">Submitting...</span> <!-- 如果正在提交，显示提交中 -->
+            <span v-else>Submit</span> <!-- 否则显示普通的提交按钮 -->
           </v-btn>
         </div>
       </div>
@@ -47,12 +56,13 @@ import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore(); // 使用 Pinia store
 const userId = ref(null); // 用來存儲 userId
+const isLoading = ref(false);
 
 const parentPickedDate = ref(""); // 用戶選的日期
 const journalText = ref(""); // 用戶輸入的日記內容
+const color = ref(""); // 用來儲存顏色
 
-const color = ref("");
-
+// 預設頁面日期為今天
 onMounted(() => {
   userStore.loadUserId(); // 確保讀取 userId
   userId.value = userStore.userId; // 從 store 獲取 userId
@@ -60,15 +70,52 @@ onMounted(() => {
   if (!userId.value) {
     alert("用戶尚未登入");
   }
+  
+  // 預設為今天的日期
+  const today = new Date();
+  parentPickedDate.value = today.toISOString().split("T")[0]; // 格式化日期为 "YYYY-MM-DD"
+
+  // 頁面載入時抓取今天的顏色
+  fetchColorForDate(parentPickedDate.value);
 });
 
-//將日記送出
+// 通过 API 获取选定日期的颜色
+const fetchColorForDate = async (selectedDate) => {
+  parentPickedDate.value = selectedDate; // 更新选定的日期
+  try {
+    isLoading.value = true; // 启动加载状态
+
+    // 发起请求获取该日期的颜色，使用路径参数而不是查询参数
+    const response = await api.get(`/api/mood_tree_color/${userId.value}/${selectedDate}`);
+    console.log("color get:", response); // ← 加這一行來觀察
+
+    // 检查响应状态
+    if (response.statusText !== "OK") {
+      alert("無法獲取顏色：" + response.data.message);
+      return;
+    }
+
+    // 获取并设置颜色
+    color.value = response.data.hex;
+    localStorage.setItem("lastColor", color.value); // 将颜色存储到 localStorage 中
+  } catch (error) {
+    console.error("獲取顏色失敗:", error);
+    alert("今天還沒留下日記唷！");
+  } finally {
+    isLoading.value = false; // 结束加载状态
+  }
+};
+
+
+// 提交日记
 const submitJournal = async () => {
   try {
     if (!journalText.value) {
       alert("請記錄些東西再送出吧");
       return;
     }
+    isLoading.value = true;
+
     const formData = new FormData();
     formData.append("user_id", userId.value);
     formData.append("entry_date", parentPickedDate.value);
@@ -82,7 +129,8 @@ const submitJournal = async () => {
     });
 
     if (response.data.status === "success") {
-      color.value = response.data.diary_entry.hex_color_code;
+      color.value = response.data.diary_entry.hex_color_code; // 获取并更新颜色
+      localStorage.setItem("lastColor", color.value); // 存储颜色到 localStorage
       console.log("color get:", color); // ← 加這一行來觀察
       alert("日記上傳成功");
     } else {
@@ -91,21 +139,24 @@ const submitJournal = async () => {
   } catch (error) {
     console.error("發生錯誤:", error);
     alert("發生錯誤，請稍後再試");
+  } finally {
+    isLoading.value = false;  // 完成后将 isLoading 设置为 false，重新启用按钮
   }
 };
 </script>
+
 
 <style scoped>
 .container {
   display: grid;
   margin-top: 30px;
-  grid-template-columns: auto auto; /* 設定列 (column) 大小 */
+  grid-template-columns: auto auto;
   grid-template-rows: auto auto auto;
   gap: 40px;
 }
 .item {
-  grid-column: 2; /* 放在第 2 欄 */
-  align-self: center; /* 垂直置中（可選） */
+  grid-column: 2;
+  align-self: center;
 }
 .infobar {
   display: flex;
@@ -119,10 +170,10 @@ const submitJournal = async () => {
   min-height: 600px;
 }
 .submit-button {
-  width: 100px; /* 控制寬度 */
-  align-self: flex-end; /* 靠右（若 journal 是 flex）*/
-  color: #1976d2; /* 按鈕文字為 Vuetify 藍色 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 可選的陰影效果 */
+  width: 130px;
+  align-self: flex-end;
+  color: #1976d2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .color-circle-wrapper {
   display: flex;
@@ -135,14 +186,5 @@ const submitJournal = async () => {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
-</style>
-
-<style>
-/* 這邊是 global 的，不加 scoped，這樣才能作用到 .v-application */
-
-.v-container {
-  margin-left: auto; /* 設定左邊邊距 */
-  margin-right: auto;
 }
 </style>
