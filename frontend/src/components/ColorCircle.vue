@@ -3,8 +3,10 @@
     <v-card-title>Your color of today</v-card-title>
     <v-card-subtitle>{{ formattedDate }}</v-card-subtitle>
 
-    <v-card-text>
+    <v-card-text class="fixed-width-card-text">
       <div class="circle" :style="{ backgroundColor: computedColor }"></div>
+      <br />
+      <div class="text-below-circle">{{ text }}</div>
     </v-card-text>
   </v-card>
 </template>
@@ -15,6 +17,7 @@ export default {
   props: {
     date: String, // 傳進來的日期
     color: String, // 新增：傳進來的顏色
+    text: String,
   },
   computed: {
     formattedDate() {
@@ -31,15 +34,17 @@ export default {
 <style scoped>
 .square-card {
   width: 250px;
-  height: 250px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  overflow-y: auto;
+  
 }
 
 .circle {
-  width: 130px;
-  height: 130px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   margin-top: 8px;
   margin-left: auto;
@@ -47,4 +52,12 @@ export default {
   transition: background-color 0.3s;
   border: 1px solid black;
 }
+
+
+/* .text-below-circle {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #333;
+} */
 </style>
