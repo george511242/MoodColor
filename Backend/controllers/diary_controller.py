@@ -35,7 +35,7 @@ def add_diary_entry(entry: DiaryEntryCreate, photo_url) -> DiaryEntry:
         raise HTTPException(404, f"User {entry.user_id} not found")
 
     # 生成顏色代碼
-    hex_color = generate_color_from_text(entry.content_text)
+    hex_color, gemini_comment = generate_color_from_text(entry.content_text)
 
     # 準備要插入的記錄
     record = {
@@ -56,7 +56,7 @@ def add_diary_entry(entry: DiaryEntryCreate, photo_url) -> DiaryEntry:
         raise HTTPException(500, f"Failed to create diary entry: {error}")
 
     # 回傳 Pydantic model
-    return DiaryEntry(**resp.data[0])
+    return DiaryEntry(**resp.data[0]), gemini_comment
 
 def get_diary_entry_by_date(user_id: int, entry_date: str) -> DiaryEntry:
     """

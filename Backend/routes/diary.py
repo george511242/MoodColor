@@ -50,9 +50,9 @@ async def post_diary_entry(
             os.unlink(tmp_path)
 
         # Add the entry to the database
-        diary_entry = add_diary_entry(entry, photo_url=photo_url)
+        diary_entry, gemini_comment = add_diary_entry(entry, photo_url=photo_url)
         
-        return {"status": "success", "diary_entry": diary_entry}
+        return {"status": "success", "diary_entry": diary_entry, "gemini_comment": gemini_comment}
     
     except Exception as e:
         return {"status": "error", "message": str(e)}

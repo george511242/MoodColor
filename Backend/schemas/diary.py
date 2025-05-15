@@ -26,6 +26,7 @@ class DiaryEntryResponse(BaseModel):
     """
     status: str
     diary_entry: DiaryEntry
+    gemini_comment: str
 
 class DeleteDiaryResponse(BaseModel):
     status: str
