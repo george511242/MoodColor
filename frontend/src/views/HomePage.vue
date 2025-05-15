@@ -5,7 +5,7 @@
         <div class="item infobar">
           <DialogBox>
             <template #content>
-              <p>Here is some custom content for the dialog.</p>
+              <p>{{ geminiComment }}</p>
             </template>
           </DialogBox>
           <v-avatar color="red">
@@ -62,6 +62,8 @@ const parentPickedDate = ref(""); // 用戶選的日期
 const journalText = ref(""); // 用戶輸入的日記內容
 const color = ref(""); // 用來儲存顏色
 const text = ref("");
+const geminiComment = ref("");
+
 
 // 預設頁面日期為今天
 onMounted(() => {
@@ -99,6 +101,7 @@ const fetchColorForDate = async (selectedDate) => {
     // 获取并设置颜色
     color.value = response.data.hex;
     text.value = response.data.content_text;
+   
     localStorage.setItem("lastColor", color.value); // 将颜色存储到 localStorage 中
     localStorage.setItem("lastText", text.value); // 将文本存储到 localStorage 中
   } catch (error) {
@@ -133,6 +136,11 @@ const submitJournal = async () => {
 
     if (response.data.status === "success") {
       color.value = response.data.diary_entry.hex_color_code; // 获取并更新颜色
+      console.log('gemini comment:', response.data.gemini_comment);
+      console.log("API response data:", response.data);
+
+      geminiComment.value = response.data.gemini_comment;
+      text.value = journalText.value; 
       localStorage.setItem("lastColor", color.value); // 存储颜色到 localStorage
       console.log("color get:", color); // ← 加這一行來觀察
       alert("日記上傳成功");
