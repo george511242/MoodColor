@@ -10,7 +10,7 @@
     </template>
 
     <template v-slot:default="{ isActive }">
-      <v-card title="Dialog">
+      <v-card title="Something for you :">
         <v-card-text>
           <slot name="content" />
         </v-card-text>
